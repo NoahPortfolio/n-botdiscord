@@ -9,7 +9,7 @@
   "Link": [
     {
       "forumLink": "https://monforum.fr/",
-      "shopLink": "https://maboutique.fr/",
+      "shopLink": "https://ma.boutique.fr/",
       "workshopLink": "https://steamcommunity.com/workshop/filedetails/?id=",
       "topservLink": "https://top-serveurs.net/garrys-mod/",
       "discordswat": "discord.gg/",
@@ -28,8 +28,7 @@
       "BanRoles": ["", ""],
       "SuppConv": ["", ""],
       "KickRoles": ["", ""],
-      "TimeOutRoles": ["", ""],
-      "TimeOutRoles": ["", ""],
+      "TimeOutRoles": ["", ""]
     }
   ],
   "Ticket": [
