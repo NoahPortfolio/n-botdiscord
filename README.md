@@ -1,32 +1,25 @@
-# 🎮 Un simple bot discord
-
 ![image](https://github.com/user-attachments/assets/eacace55-037f-4c11-a2d1-7b1aedac26ea)
 
+# 🚀 The Ultimate Discord Bot for Your Server!
+Transform your Discord server into an interactive and seamless experience with our all-in-one bot!
+## 🔥 Key Features:
+### ✅ Welcome & Goodbye System
+Give a warm welcome to new members and send personalized farewell messages to create a strong and engaging community.
 
-## 🚀 Fonctionnalités
+### ✅ Slash Commands & Admin Tools
+Simplify server management with intuitive slash commands, making it easy for everyone to interact with the bot.
 
-/commands, Système de tickets, cmd admin, cmd simple, système de suggestion, système de bienvenue, système de giveaway, simple a configurer :) 
+### ✅ Suggestion System
+Let your community share their ideas and improvements directly through the bot for better engagement and innovation.
 
+### ✅ Ticket System
+Manage support requests efficiently with an organized and user-friendly ticketing system.
 
-## 📥 Installation
-Suivez ces étapes pour installer et configurer le bot sur votre serveur discord.
+### ✅ Automated Giveaways
+Easily host exciting contests and giveaways with a fully automated system that ensures fair and random winners.
 
-Pré-requis
-Avant de commencer, assurez-vous d'avoir :
+💡 Join our Discord server to test the bot, share your suggestions, and get support!
 
-**Node.js** (version 16 ou plus récente)
-**Discord.js** (module pour interagir avec l'API de Discord)
+👉 My Discord : noah_ballas
 
-## 📥 Installation en Local
-
-npm install discord.js
-
-## 📥 Installation sur Pterodactyl
-
-Pour installer le bot sur Pterodactyl :
-
-Allez dans les paramètres du serveur sur le panel Pterodactyl.
-
-Rendez-vous dans la section Additional Node Packages.
-
-Ajoutez les packages suivants : discord.js @discordjs/rest
+https://discord.gg/ka3cM9Avjm
