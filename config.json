@@ -1,7 +1,7 @@
 {
-  "clientId": "votre_clientid",
-  "guildId": "votre_guildid",
-  "token": "votre_token",
+  "clientId": "clientId",
+  "guildId": "guildId",
+  "token": "token",
   "banRoles": [
       "ban_roles"
   ],
@@ -18,7 +18,7 @@
   "welcomeChannelId": "welcomeChannelId",
   "leaveChannelId": "leaveChannelId",
   "serverLogoUrl": "https://i.imgur.com/aiecS0a.jpeg", 
-  "suggestionsChannelId": "1278075111152287784",
+  "suggestionsChannelId": "suggestionsChannelId",
   "adminRoles": [
     "adminRoles"
   ],
