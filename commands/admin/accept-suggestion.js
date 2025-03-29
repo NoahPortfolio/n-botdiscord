@@ -1,40 +1,84 @@
-const { SlashCommandBuilder, EmbedBuilder, PermissionsBitField } = require('discord.js');
-const { banRoles } = require('../../config.json');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { Roles, Channels } = require('../../config.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('accept-suggestion')
-        .setDescription('Accepter une suggestion.')
+        .setDescription('Accepter une suggestion')
         .addStringOption(option =>
             option.setName('message_id')
                 .setDescription('ID du message de suggestion')
                 .setRequired(true)),
     async execute(interaction) {
-        const messageId = interaction.options.getString('message_id');
-        const channel = interaction.channel;
+        await interaction.deferReply({ ephemeral: true });
 
-        if (!interaction.member.roles.cache.some(role => adminRoles.includes(role.id))) {
-            return interaction.reply({ content: "Vous n'avez pas la permission d'utiliser cette commande.", ephemeral: true });
+        const messageId = interaction.options.getString('message_id');
+        const channel = interaction.guild.channels.cache.get(Channels.suggestionsChannelId);
+
+        if (!interaction.member.roles.cache.has(Roles.AcceptSuggestion)) {
+            return interaction.editReply({ 
+                content: "❌ Vous n'avez pas la permission d'accepter des suggestions."
+            });
         }
 
         try {
-            console.log(`Recherche du message ID: ${messageId} dans le canal ${channel.id}`);
             const message = await channel.messages.fetch(messageId);
-
             if (!message) {
-                return interaction.reply({ content: "Message introuvable. Vérifiez l'ID du message.", ephemeral: true });
+                return interaction.editReply({ 
+                    content: "❌ Message introuvable dans le salon des suggestions."
+                });
             }
 
-            const embed = message.embeds[0];
-            const updatedEmbed = EmbedBuilder.from(embed).setColor('#00FF00'); 
+            const embedData = message.embeds[0]?.data;
+            if (!embedData) {
+                return interaction.editReply({
+                    content: "❌ Ce message ne contient pas de suggestion valide."
+                });
+            }
 
-            await message.edit({ embeds: [updatedEmbed] });
-            const thread = message.hasThread ? await message.thread : null;
-            if (thread) await thread.setLocked(true);
-            await interaction.reply({ content: "Suggestion acceptée.", ephemeral: true });
+            const fields = embedData.fields?.map(field => 
+                field.name === 'Statut' 
+                    ? { name: 'Statut', value: '🟢 Acceptée', inline: true }
+                    : field
+            ) || [];
+
+            if (!fields.some(f => f.name === 'Statut')) {
+                fields.push({
+                    name: 'Statut',
+                    value: '🟢 Acceptée',
+                    inline: true
+                });
+            }
+
+            const updatedEmbed = new EmbedBuilder(embedData)
+                .setColor('#00FF00')
+                .setFields(fields)
+                .setFooter({ 
+                    text: `✅ Accepté par ${interaction.user.username}`,
+                    iconURL: interaction.user.displayAvatarURL() 
+                });
+
+            await message.edit({ 
+                embeds: [updatedEmbed],
+                components: [] 
+            });
+
+            if (message.hasThread) {
+                const thread = await message.thread;
+                await thread.send(`🎉 Cette suggestion a été acceptée par ${interaction.user}!`);
+                await thread.setLocked(true);
+                await thread.setArchived(true);
+            }
+
+            await interaction.editReply({ 
+                content: "✅ Suggestion acceptée avec succès." 
+            });
+
         } catch (error) {
-            console.error(`Erreur lors de la recherche du message: ${error.message}`);
-            await interaction.reply({ content: "Erreur lors de l'acceptation de la suggestion.", ephemeral: true });
+            console.error('Erreur acceptation suggestion:', error);
+            await interaction.editReply({ 
+                content: "❌ Erreur lors de l'acceptation de la suggestion."
+            });
         }
     },
 };

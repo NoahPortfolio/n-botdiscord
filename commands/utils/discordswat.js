@@ -1,11 +1,24 @@
-const { SlashCommandBuilder } = require('discord.js');
-const { discordswat } = require('../../config.json');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { Commands, Server } = require('../../config.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('discordswat')
-        .setDescription('Affiche le lien du forum.'),
+        .setName('discordpolice')
+        .setDescription('Affiche le lien du discord Police'),
     async execute(interaction) {
-        await interaction.reply({ content: `Voici le lien du Discord Swat : ${discordswat}` });
+        if (!Commands?.discordPolice) {
+            return interaction.reply({
+                content: '❌ Le lien du Discord Police n\'est pas configuré',
+                ephemeral: true
+            });
+        }
+
+        const embed = new EmbedBuilder()
+            .setColor('#0099ff')
+            .setTitle('👮 Discord Police')
+            .setDescription(`[Discord Police](${Commands.discordPolice})`)
+            .setThumbnail(Server.logoUrl)
+
+        await interaction.reply({ embeds: [embed] });
     },
 };

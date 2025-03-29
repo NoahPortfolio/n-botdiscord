@@ -1,39 +1,62 @@
 const { Events, EmbedBuilder } = require('discord.js');
-const { leaveChannelId, serverLogoUrl } = require('../config.json');
+const { Channels, Server } = require('../config.json');
 
 module.exports = {
     name: Events.GuildMemberRemove,
     async execute(member) {
-        const channel = member.guild.channels.cache.get(leaveChannelId);
-        if (!channel) return;
+        const leaveChannel = member.guild.channels.cache.get(Channels.leaveChannelId);
+        if (!leaveChannel) {
+            console.error('❌ Salon de départ introuvable - Vérifiez leaveChannelId dans config.json');
+            return;
+        }
 
-        const joinedTimestamp = member.joinedTimestamp;
-        const timeJoined = Date.now() - joinedTimestamp;
-        const joinedAtDate = new Date(joinedTimestamp);
-        const formattedJoinDate = joinedAtDate.toLocaleDateString("fr-FR", {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-        });
+        try {
+            const joinDate = new Date(member.joinedTimestamp);
+            const timeSpent = this.formatDuration(Date.now() - member.joinedTimestamp);
 
-        const years = Math.floor(timeJoined / (365.25 * 24 * 60 * 60 * 1000));
-        const months = Math.floor((timeJoined / (30.44 * 24 * 60 * 60 * 1000)) % 12);
-        const days = Math.floor((timeJoined / (24 * 60 * 60 * 1000)) % 30);
+            const leaveEmbed = new EmbedBuilder()
+                .setColor('#FF6961') // Rouge plus doux
+                .setTitle(`😢 ${member.user.username} nous a quitté(e)s`)
+                .setDescription(`Nous sommes maintenant ${member.guild.memberCount} membres.`)
+                .setThumbnail(member.user.displayAvatarURL({ dynamic: true, size: 256 }))
+                .setImage(Server.bannerUrl || Server.logoUrl)
+                .addFields(
+                    {
+                        name: '📅 Date d\'arrivée',
+                        value: `<t:${Math.floor(member.joinedTimestamp / 1000)}:D>`,
+                        inline: true
+                    },
+                    {
+                        name: '⏱️ Temps passé',
+                        value: timeSpent,
+                        inline: true
+                    }
+                )
+                .setFooter({ 
+                    text: `${member.guild.name} • À bientôt peut-être !`, 
+                    iconURL: member.guild.iconURL() 
+                });
 
-        let timeSpent = '';
-        if (years > 0) timeSpent += `${years} an${years > 1 ? 's' : ''} `;
-        if (months > 0) timeSpent += `${months} mois `;
-        if (days > 0 || (years === 0 && months === 0)) timeSpent += `${days} jour${days > 1 ? 's' : ''}`;
+            await leaveChannel.send({ embeds: [leaveEmbed] });
 
-        const leaveEmbed = new EmbedBuilder()
-            .setColor('#FF0000')
-            .setTitle('Un membre vient de partir… 😢')
-            .setDescription(`À bientôt, ${member.user.username}.`)
-            .setFooter({ text: `👋 Avait rejoint le serveur le ${formattedJoinDate}, soit il y a ${timeSpent.trim()}.` })
-            .setThumbnail(member.user.displayAvatarURL({ dynamic: true, size: 512 }))
-            .setImage(serverLogoUrl)
-            .setTimestamp();
-
-        channel.send({ embeds: [leaveEmbed] });
+        } catch (error) {
+            console.error('❌ Erreur lors de l\'envoi du message de départ:', error);
+        }
     },
+
+    formatDuration(ms) {
+        const seconds = Math.floor(ms / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+        const months = Math.floor(days / 30.44);
+        const years = Math.floor(months / 12);
+
+        const parts = [];
+        if (years > 0) parts.push(`${years} an${years > 1 ? 's' : ''}`);
+        if (months % 12 > 0) parts.push(`${months % 12} mois`);
+        if (days % 30 > 0 && months < 3) parts.push(`${days % 30} jour${days % 30 > 1 ? 's' : ''}`);
+        
+        return parts.join(' ') || 'quelques heures';
+    }
 };

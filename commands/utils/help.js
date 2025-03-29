@@ -1,26 +1,22 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('help')
-        .setDescription('Affiche la liste des commandes disponibles.'),
+        .setDescription('Affiche la liste des commandes disponibles'),
     async execute(interaction) {
-        await interaction.reply({
-            content: `Voici une liste des commandes disponibles :
-- \`/kick\` : Kick un membre du serveur.
-- \`/ban\` : Ban un membre du serveur.
-- \`/deban\` : Débannir un membre du serveur.
-- \`/effacer\` : Efface un certain nombre de messages.
-- \`/avatar\` : Affiche l'avatar d'un utilisateur.
-- \`/info-serveur\` : Affiche les informations sur le serveur.
-- \`/discordswat\` : Affiche le discord swat.
-- \`/discordpolice\` : Affiche le discord police.
-- \`/forum\` : Affiche le forum.
-- \`/workshop\` : Affiche le workshop.
-- \`/topserv\` : Affiche le lien top serveur.
-- \`/credit\` : Affiche le créateur 😁.
-            `,
-            ephemeral: true,
-        });
+        const helpEmbed = new EmbedBuilder()
+            .setColor('#0099ff')
+            .setTitle('📚 Liste des commandes')
+            .addFields(
+                { name: '🔨 Modération', value: '`/ban`, `/kick`, `/effacer-conversation`' },
+                { name: '🎉 Giveaway', value: '`/giveaway`' },
+                { name: '💡 Suggestions', value: '`/accept-suggestion`, `/refuse-suggestion`' },
+                { name: '📊 Utilitaires', value: '`/ping`, `/avatar`, `/credit`, `/info-serveur`, `/ip`, `/topserv`' },
+                { name: '🎮 Divers', value: '`/boutique`, `/discordpolice`, `/discordswat`, `/forum`, `/workshop`' }
+            )
+            .setFooter({ text: ':)' });
+
+        await interaction.reply({ embeds: [helpEmbed] });
     },
 };

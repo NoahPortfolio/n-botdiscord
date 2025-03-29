@@ -1,10 +1,24 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { Commands, Server } = require('../../config.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('credit')
-        .setDescription('Bot crée par Noah Ballas'),
+        .setDescription('Affiche le forum du serveur'),
     async execute(interaction) {
-        await interaction.reply('**Lien de Noah Ballas [Support MP] : \n https://discord.com/users/662911266742075405 \n https://aide-serveur.fr/ressources/bot-discord-admin.4319/ \n **');
+        if (!Commands?.forum) {
+            return interaction.reply({
+                content: '❌ Le lien du Credit n\'est pas configuré',
+                ephemeral: true
+            });
+        }
+
+        const embed = new EmbedBuilder()
+            .setColor('#0099ff')
+            .setTitle('Bot crée par Noah Ballas')
+            .setDescription(`Toutes demande de support possible par MP discord : noah_ballas`)
+            .setThumbnail(Server.logoUrl)
+
+        await interaction.reply({ embeds: [embed] });
     },
 };

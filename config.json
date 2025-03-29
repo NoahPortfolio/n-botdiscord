@@ -1,65 +1,80 @@
 {
-  "clientId": "clientId",
-  "guildId": "guildId",
-  "token": "token",
-  "banRoles": [
-      "ban_roles"
-  ],
-  "deleteConvRoles": [
-    "deleteConvRoles",
-    "deleteConvRoles"
-  ],
-  "forumLink": "https://monforum.fr/",
-  "shopLink": "https://maboutique.fr/",
-  "workshopLink": "https://steamcommunity.com/workshop/filedetails/?id=",
-  "topservLink": "https://top-serveurs.net/garrys-mod/",
-  "discordswat": "discord.gg/",
-  "discordpolice": "discord.gg/",
-  "welcomeChannelId": "welcomeChannelId",
-  "leaveChannelId": "leaveChannelId",
-  "serverLogoUrl": "https://i.imgur.com/aiecS0a.jpeg", 
-  "suggestionsChannelId": "suggestionsChannelId",
-  "adminRoles": [
-    "adminRoles"
-  ],
-  "ticketChannelId": "ticketChannelId",
-  "staffChannelId": "staffChannelId",
-  "ticketCategories": [
-    {
-      "label": "🎟️ | Support",
-      "description": "Pour des questions ou des problèmes de support.",
-      "roleId": "roleId",
-      "categoryId": "categoryId"
+  "DiscordBot": {
+    "clientId": "VOTRE_CLIENT_ID",
+    "guildId": "VOTRE_GUILD_ID",
+    "token": "VOTRE_TOKEN"
   },
-  {
-      "label": "🚗 | Achat Véhicule import",
-      "description": "Pour les questions ou les problèmes liés à l'achat de véhicules importés du workshop.",
-      "roleId": "roleId",
-      "categoryId": "categoryId"
+  "Commands": {
+    "forum": "https://votreforum.fr/",
+    "shop": "https://votreboutique.fr/",
+    "topServers": "https://top-serveurs.net/",
+    "discordSwat": "https://discord.gg/votre-lien",
+    "discordPolice": "https://discord.gg/votre-lien"
   },
-  {
-      "label": "🚓 | Plainte Joueur",
-      "description": "Pour les plaintes concernant un joueur.",
-      "roleId": "roleId",
-      "categoryId": "categoryId"
+  "Roles": {
+    "banRoles": ["ID_DU_ROLE"],
+    "KickRoles": ["ID_DU_ROLE"],
+    "deleteConvRoles": ["ID_DU_ROLE"],
+    "adminRoles": ["ID_DU_ROLE"],
+    "AcceptSuggestion": "ID_DU_ROLE"
   },
-  {
-      "label": "⚖️ | Plainte Staff",
-      "description": "Pour les plaintes concernant le staff.",
-      "roleId": "roleId",
-      "categoryId": "categoryId"
+  "Channels": {
+    "welcomeChannelId": "ID_DU_CHANNEL",
+    "leaveChannelId": "ID_DU_CHANNEL",
+    "suggestionsChannelId": "ID_DU_CHANNEL",
+    "ticketChannelId": "ID_DU_CHANNEL",
+    "staffChannelId": "ID_DU_CHANNEL",
+    "rolesChannelId": "ID_DU_CHANNEL"
   },
-  {
-      "label": "📋 | Unban",
-      "description": "Pour les demandes d'unban.",
-      "roleId": "roleId",
-      "categoryId": "categoryId"
+  "Server": {
+    "logoUrl": "https://i.imgur.com/exemple.jpeg",
+    "name": "Nom du Serveur",
+    "ticketSettings": {
+      "ticketPrefix": "ticket-"
+    }
   },
-  {
-      "label": "🛒 | Boutique",
-      "description": "Pour les questions ou les problèmes liés à la boutique.",
-      "roleId": "roleId",
-      "categoryId": "categoryId"
+  "Tickets": {
+    "categories": [
+      {
+        "label": "🎟️ | Support",
+        "description": "Pour des questions ou des problèmes de support.",
+        "roleId": "ID_DU_ROLE",
+        "categoryId": "ID_DE_LA_CATEGORIE"
+      },
+      {
+        "label": "🚗 | Véhicule Import",
+        "description": "Demandes concernant les véhicules importés.",
+        "roleId": "ID_DU_ROLE",
+        "categoryId": "ID_DE_LA_CATEGORIE"
+      },
+      {
+        "label": "🚓 | Plainte Joueur",
+        "description": "Signaler un problème avec un joueur.",
+        "roleId": "ID_DU_ROLE",
+        "categoryId": "ID_DE_LA_CATEGORIE"
+      },
+      {
+        "label": "⚖️ | Plainte Staff",
+        "description": "Signaler un problème avec un membre du staff.",
+        "roleId": "ID_DU_ROLE",
+        "categoryId": "ID_DE_LA_CATEGORIE"
+      },
+      {
+        "label": "📋 | Unban",
+        "description": "Demande de débanissement.",
+        "roleId": "ID_DU_ROLE",
+        "categoryId": "ID_DE_LA_CATEGORIE"
+      },
+      {
+        "label": "🛒 | Boutique",
+        "description": "Problèmes avec la boutique.",
+        "roleId": "ID_DU_ROLE",
+        "categoryId": "ID_DE_LA_CATEGORIE"
+      }
+    ],
+    "settings": {
+      "maxTicketsPerUser": 1,
+      "allowMultipleInDifferentCategories": false
+    }
   }
-]
 }
